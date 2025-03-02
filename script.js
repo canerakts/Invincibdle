@@ -16,13 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Background images array - changes with wrong guesses
     const backgroundImages = [
-        'images/backgrounds/default', // Default
-        'images/backgrounds/wrong1', // Wrong guess 1
-        'images/backgrounds/wrong2', // Wrong guess 2
-        'images/backgrounds/wrong3', // Wrong guess 3
-        'images/backgrounds/wrong4', // Wrong guess 4
-        'images/backgrounds/wrong5', // Wrong guess 5
-        'images/backgrounds/wrong6'  // Wrong guess 6
+        'images/background/default.jpg', // Default
+        'images/background/wrong1.jpg', // Wrong guess 1
+        'images/background/wrong2.jpg', // Wrong guess 2
+        'images/background/wrong3.jpg', // Wrong guess 3
+        'images/background/wrong4.jpg', // Wrong guess 4
+        'images/background/wrong5.jpg', // Wrong guess 5
+        'images/background/wrong6.jpg'  // Wrong guess 6
     ];
     
     let wrongGuessCount = 0; // Track wrong guesses for background changes
