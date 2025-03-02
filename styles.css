@@ -1,0 +1,636 @@
+:root {
+    --primary-yellow: #f0e14a;
+    --primary-blue: #1e3cc0;
+    --primary-black: #111111;
+    --accent-red: #c0271e;
+    --text-white: #ffffff;
+    --bg-dark: #0a1428;
+    --bg-medium: #1a2435;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    background-image: url('https://static.wikia.nocookie.net/logopedia/images/c/c2/Invincible_TV_Series_%28S01E01_Title_Card%29.png/revision/latest/scale-to-width-down/1000?cb=20240623165115');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 60px;
+    transition: background-image 0.5s ease-in-out;
+}
+
+/* Add a semi-transparent overlay to ensure content is readable without darkening the image */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 20, 40, 0.7); /* Semi-transparent overlay */
+    z-index: -1;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.title {
+    font-family: 'Bangers', cursive;
+    font-size: 4rem;
+    color: var(--primary-yellow);
+    text-shadow: 3px 3px 0 var(--primary-black), 
+                 5px 5px 0 var(--primary-blue);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    transform: rotate(-2deg);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-white);
+}
+
+.testing-mode {
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 5px 10px;
+    background-color: var(--accent-red);
+    color: white;
+    border-radius: 5px;
+    display: inline-block;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+.game-container {
+    background-color: rgba(26, 36, 53, 0.7);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    border: 3px solid var(--primary-blue);
+    backdrop-filter: blur(3px);
+}
+
+.input-container {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#character-guess {
+    flex: 1;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border: 2px solid var(--primary-blue);
+    border-radius: 5px 0 0 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-white);
+    outline: none;
+    transition: all 0.3s;
+}
+
+#character-guess:focus {
+    border-color: var(--primary-yellow);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+#guess-button {
+    padding: 12px 24px;
+    font-family: 'Bangers', cursive;
+    font-size: 1.2rem;
+    background-color: var(--primary-blue);
+    color: var(--primary-yellow);
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 1px;
+}
+
+#guess-button:hover {
+    background-color: var(--primary-yellow);
+    color: var(--primary-blue);
+}
+
+/* Comic style button effect */
+#guess-button {
+    position: relative;
+    box-shadow: 3px 3px 0 var(--primary-black);
+}
+
+#guess-button:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--primary-black);
+}
+
+.attempts-container {
+    margin-bottom: 20px;
+    opacity: 1;
+}
+
+.attempts-container h2 {
+    font-family: 'Bangers', cursive;
+    color: var(--primary-yellow);
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.countdown-container {
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(26, 36, 53, 0.7);
+    border-radius: 5px;
+    border-left: 5px solid var(--primary-yellow);
+    backdrop-filter: blur(2px);
+}
+
+.countdown-container h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text-white);
+}
+
+#next-character-time {
+    font-weight: bold;
+    color: var(--primary-yellow);
+    font-size: 1.2rem;
+}
+
+.previous-character-container {
+    margin-bottom: 20px;
+    padding: 10px;
+    text-align: center;
+    background-color: rgba(26, 36, 53, 0.7);
+    border-radius: 5px;
+    border-left: 5px solid var(--primary-blue);
+    backdrop-filter: blur(2px);
+}
+
+.previous-character-container h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text-white);
+}
+
+#previous-character {
+    font-weight: bold;
+    color: var(--primary-yellow);
+}
+
+.guess-item {
+    opacity: 0.7;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-left: 5px solid var(--primary-blue);
+    backdrop-filter: blur(2px);
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.guess-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.character-avatar {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-blue);
+    margin-right: 15px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    flex-shrink: 0;
+}
+
+/* Remove unused character-header and character-name styles */
+.character-header {
+    display: none;
+}
+
+.character-name {
+    display: none;
+}
+
+/* Updated Attribute Table Styling */
+.attributes-table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(0, 0, 0, 0.15); /* More transparent background */
+}
+
+.attribute-titles {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.attribute-values {
+    display: flex;
+    
+}
+
+.attribute-title {
+    flex: 1;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 8px 5px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 2px;
+}
+
+.attribute-value {
+    flex: 1;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 12px 5px;
+    text-align: center;
+    margin: 0 2px;
+    animation: slideIn 0.5s ease forwards;
+    transform-origin: left;
+    opacity: 0;
+}
+
+/* Add animation for attributes to slide in from left to right */
+@keyframes slideIn {
+    from {
+        transform: scaleX(0);
+        opacity: 0;
+    }
+    to {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+}
+
+/* Add staggered delay for each attribute to create a sequence effect */
+.attribute-values > div:nth-child(1) { animation-delay: 0s; }
+.attribute-values > div:nth-child(2) { animation-delay: 0.2s; }
+.attribute-values > div:nth-child(3) { animation-delay: 0.4s; }
+.attribute-values > div:nth-child(4) { animation-delay: 0.6s; }
+.attribute-values > div:nth-child(5) { animation-delay: 0.8s; }
+.attribute-values > div:nth-child(6) { animation-delay: 1.0s; }
+
+.attribute-match {
+    background-color: rgba(0, 128, 0, 0.5);
+    color: white;
+}
+
+.attribute-different {
+    background-color: rgba(192, 39, 30, 0.5);
+    color: white;
+}
+
+.attribute-partial {
+    background-color: rgba(255, 140, 0, 0.5);
+    color: white;
+}
+
+/* Update existing attribute styles that will no longer be used */
+.attributes {
+    display: none;
+}
+
+.attribute {
+    display: none;
+}
+
+.attribute-cell {
+    display: none;
+}
+
+/* Responsive styling for attribute table */
+@media (max-width: 768px) {
+    .attribute-titles,
+    .attribute-values {
+        flex-wrap: wrap;
+    }
+    
+    .attribute-title,
+    .attribute-value {
+        min-width: 80px;
+        flex-basis: calc(33.333% - 4px);
+    }
+}
+
+@media (max-width: 480px) {
+    .guess-content {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .character-avatar {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .attribute-title,
+    .attribute-value {
+        flex-basis: calc(50% - 4px);
+    }
+}
+
+.result-container {
+    text-align: center;
+}
+
+#result-message {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    min-height: 24px;
+}
+
+.win-message {
+    color: var(--primary-yellow);
+    font-weight: bold;
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 0 var(--primary-black);
+}
+
+.game-info {
+    background-color: rgba(26, 36, 53, 0.7);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    border: 3px solid var(--primary-blue);
+    backdrop-filter: blur(3px);
+}
+
+.game-info h2 {
+    font-family: 'Bangers', cursive;
+    color: var(--primary-yellow);
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.game-info ul {
+    list-style-type: none;
+}
+
+.game-info li {
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.game-info li:before {
+    content: "•";
+    color: var(--primary-yellow);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+/* Statistics */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.stat {
+    background-color: rgba(30, 60, 192, 0.2);
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary-yellow);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-white);
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: rgba(26, 36, 53, 0.85);
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    border: 5px solid var(--primary-yellow);
+    box-shadow: 0 0 30px rgba(240, 225, 74, 0.3);
+    text-align: center;
+    backdrop-filter: blur(5px);
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-white);
+}
+
+#share-button {
+    background-color: var(--primary-yellow);
+    color: var(--primary-black);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-family: 'Bangers', cursive;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-top: 20px;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+#share-button:hover {
+    background-color: var(--primary-blue);
+    color: var(--primary-yellow);
+}
+
+.hidden {
+    display: none !important;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(10, 20, 40, 0.7);
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+    .title {
+        font-size: 3rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .input-container {
+        flex-direction: column;
+    }
+    
+    #character-guess, #guess-button {
+        width: 100%;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+}
+
+.custom-dropdown {
+    position: absolute;
+    z-index: 100;
+    background-color: rgba(26, 36, 53, 0.8); /* Match other transparent elements */
+    border: 1px solid rgba(51, 51, 51, 0.8);
+    border-radius: 0 0 5px 5px;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px); /* Add blur effect for consistency */
+}
+
+.dropdown-option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.dropdown-option:hover, .dropdown-option.focused {
+    background-color: rgba(51, 51, 51, 0.8); /* Match the hover state to be transparent too */
+}
+
+.dropdown-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 1px solid var(--primary-blue);
+    object-fit: cover;
+}
+
+/* Custom scrollbar for the dropdown */
+.custom-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-dropdown::-webkit-scrollbar-track {
+    background: #0f0f0f;
+}
+
+.custom-dropdown::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+.custom-dropdown::-webkit-scrollbar-thumb:hover {
+    background: #444;
+}
+
+/* Change input styling to match image */
+#character-guess {
+    background-color: #1a1a1a;
+    color: white;
+    border: 1px solid #333;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 3px;
+}
+
+#character-guess:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+}
+
+/* Hide dropdown when needed */
+.hidden {
+    display: none !important;
+}
+
+.game-status {
+    background-color: rgba(26, 36, 53, 0.7);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    border: 3px solid var(--primary-blue);
+    backdrop-filter: blur(3px);
+}
+
+.game-status h2 {
+    font-family: 'Bangers', cursive;
+    color: var(--primary-yellow);
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+} 
+
+.result-container {
+    margin-top: -20px;
+}

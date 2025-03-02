@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invincibdle - Daily Invincible Character Guessing Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="title">INVINCIBDLE</h1>
+            <p class="subtitle">Guess the daily Invincible character!</p>
+        </header>
+
+        <div class="game-container">
+            <div class="input-container">
+                <input type="text" id="character-guess" placeholder="Enter an Invincible character...">
+                <button id="guess-button">GUESS!</button>
+            </div>
+
+            <div class="attempts-container hidden" id="attempts-section">
+                <h2>Your Guesses</h2>
+                <div id="guesses-list"></div>
+            </div>
+
+            <div class="result-container">
+                <div id="result-message"></div>
+                <div id="statistics" class="hidden">
+                    <h2>Statistics</h2>
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <div class="stat-number" id="games-played">0</div>
+                            <div class="stat-label">Played</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number" id="games-won">0</div>
+                            <div class="stat-label">Won</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number" id="current-streak">0</div>
+                            <div class="stat-label">Current Streak</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number" id="max-streak">0</div>
+                            <div class="stat-label">Max Streak</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-status">
+            
+            <div class="countdown-container">
+                <h3>Next character in: <span id="next-character-time"></span></h3>
+            </div>
+
+            <div id="previous-character-container" class="previous-character-container hidden">
+                <h3>Yesterday's character: <span id="previous-character">Unknown</span></h3>
+            </div>
+        </div>
+
+        <div class="game-info">
+            <h2>How to Play</h2>
+            <ul>
+                <li>Guess the Invincible character of the day</li>
+                <li>Each day features a new character</li>
+                <li>After each guess, you'll see which attributes match:</li>
+                <li><span class="attribute-match">Green</span> means the attribute matches</li>
+                <li><span class="attribute-partial">Orange</span> means the attribute partially matches (some values in common)</li>
+                <li><span class="attribute-different">Red</span> means the attribute is different</li>
+                <li>Try to guess in as few attempts as possible!</li>
+            </ul>
+        </div>
+
+        <div id="win-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>VICTORY!</h2>
+                <p>You correctly guessed <span id="correct-character"></span>!</p>
+                <div id="modal-stats"></div>
+                <p id="next-character-countdown">Next character in <span id="time-remaining"></span></p>
+                <button id="share-button">SHARE RESULTS</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Based on the Invincible series created by Robert Kirkman</p>
+    </footer>
+
+    <script src="characters.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
