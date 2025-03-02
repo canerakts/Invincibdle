@@ -16,13 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Background images array - changes with wrong guesses
     const backgroundImages = [
-        'https://static.wikia.nocookie.net/logopedia/images/c/c2/Invincible_TV_Series_%28S01E01_Title_Card%29.png/revision/latest/scale-to-width-down/1000?cb=20240623165115', // Default
-        'https://static.wikia.nocookie.net/logopedia/images/2/23/Invincible_TV_Series_%28S01E03_Title_Card%29.png/revision/latest/scale-to-width-down/1000?cb=20240623165158', // Wrong guess 1
-        'https://static.wikia.nocookie.net/logopedia/images/9/9a/Invincible_TV_Series_%28S01E04_Title_Card%29.png/revision/latest/scale-to-width-down/1000?cb=20240623165220', // Wrong guess 2
-        'https://static.wikia.nocookie.net/logopedia/images/f/f4/Invincible_TV_Series_%28S01E05_Title_Card%29.png/revision/latest/scale-to-width-down/1000?cb=20240623165245', // Wrong guess 3
-        'https://static.wikia.nocookie.net/logopedia/images/8/8c/Invincible_TV_Series_%28S01E06_Title_Card%29.png/revision/latest/scale-to-width-down/1000?cb=20240623165303', // Wrong guess 4
-        'https://static.wikia.nocookie.net/logopedia/images/b/b9/Invincible_TV_Series_%28S01E07_Title_Card%29.png/revision/latest/scale-to-width-down/1000?cb=20240623165329', // Wrong guess 5
-        'https://static.wikia.nocookie.net/logopedia/images/1/16/Invincible_TV_Series_%28S01E08_Title_Card%29.png/revision/latest/scale-to-width-down/1000?cb=20240623165348'  // Wrong guess 6
+        'images/backgrounds/default', // Default
+        'images/backgrounds/wrong1', // Wrong guess 1
+        'images/backgrounds/wrong2', // Wrong guess 2
+        'images/backgrounds/wrong3', // Wrong guess 3
+        'images/backgrounds/wrong4', // Wrong guess 4
+        'images/backgrounds/wrong5', // Wrong guess 5
+        'images/backgrounds/wrong6'  // Wrong guess 6
     ];
     
     let wrongGuessCount = 0; // Track wrong guesses for background changes
