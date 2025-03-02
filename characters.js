@@ -34,7 +34,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Villain",
         affiliation: ["Machine Head", "Isotope"],
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/c/c8/Titan_invincible_27s670_%284%29.png/revision/latest/scale-to-width-down/1200?cb=20210327234518"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/c/c8/Titan_invincible_27s670_%284%29.png/revision/latest/scale-to-width-down/1200?cb=20210327234518"
     },
     {
         name: "Nolan Grayson",
@@ -61,7 +61,7 @@ const charactersDB = [
         homePlanet: "Viltrum",
         alignment: "Villain",
         affiliation: "Viltrum Empire",
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/d/d5/Kreggg.png/revision/latest/smart/width/386/height/259?cb=20240422204239"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/d/d5/Kreggg.png/revision/latest/smart/width/386/height/259?cb=20240422204239"
     },
     {
         name: "Lucan",
@@ -79,7 +79,7 @@ const charactersDB = [
         homePlanet: ["Viltrum", "Talescria"],
         alignment: "Villain",
         affiliation: ["Viltrum Empire", "Coalition of Planets"],
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/a/a3/Thaedus_Mustache.png/revision/latest?cb=20240314113731"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/a/a3/Thaedus_Mustache.png/revision/latest?cb=20240314113731"
     },
     {
         name: "Eve Wilkins",
@@ -124,7 +124,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Villain",
         affiliation: "Global Defense Agency",
-        image: "https://static.wikia.nocookie.net/imagecomics/images/e/ec/D.A._Sinclair.PNG.webp/revision/latest/thumbnail/width/360/height/450?cb=20230329154412"
+        image: "https://static0.wikia.nocookie.net/imagecomics/images/e/ec/D.A._Sinclair.PNG.webp/revision/latest/thumbnail/width/360/height/450?cb=20230329154412"
     },
     {
         name: "Damien Darkblood",
@@ -133,7 +133,7 @@ const charactersDB = [
         homePlanet: "Hell",
         alignment: "Neutral",
         affiliation: "Global Defense Agency",
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/3/37/Invincible_detective_suspisios_demon_vlcsnap-2021-03-26-13h57m02s459.png/revision/latest/scale-to-width-down/1200?cb=20210327233158"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/3/37/Invincible_detective_suspisios_demon_vlcsnap-2021-03-26-13h57m02s459.png/revision/latest/scale-to-width-down/1200?cb=20210327233158"
     },
     {
         name: "Allen the Alien",
@@ -151,7 +151,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Villain",
         affiliation: "Global Defense Agency",
-        image: "https://i.redd.it/e5wu6tc5plx61.jpg"
+        image: "https://static1.cbrimages.com/wordpress/wp-content/uploads/2025/02/invincible-season-3-ep-6-16.jpg"
     },
     {
         name: "Debbie Grayson",
@@ -160,7 +160,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Civilian",
         affiliation: ["Mark Grayson", "Nolan Grayson"],
-        image: "https://static1.cbrimages.com/wordpress/wp-content/uploads/2025/02/invincible-season-3-ep-6-16.jpg"
+        image: "https://i.redd.it/e5wu6tc5plx61.jpg"
     },
     {
         name: "Oliver Grayson",
@@ -196,7 +196,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Hero",
         affiliation: ["Guardians of the Globe", "Teen Team"],
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/c/c2/Rae.jpg/revision/latest?cb=20240407175544"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/c/c2/Rae.jpg/revision/latest?cb=20240407175544"
     },
     {
         name: "Amber Bennett",
@@ -205,7 +205,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Civilian",
         affiliation: "None",
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/5/5e/Amber_Bennett.png/revision/latest?cb=20210327122152"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/5/5e/Amber_Bennett.png/revision/latest?cb=20210327122152"
     },
     {
         name: "Angstrom Levy",
@@ -214,7 +214,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Villain",
         affiliation: "None",
-        image: "https://static.wikia.nocookie.net/villains/images/8/8a/Angstrom_Levy_TV.png/revision/latest/scale-to-width/360?cb=20250215221933"
+        image: "https://static0.wikia.nocookie.net/villains/images/8/8a/Angstrom_Levy_TV.png/revision/latest/scale-to-width/360?cb=20250215221933"
     },
     {
         name: "Battle Beast",
@@ -241,7 +241,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Civilian",
         affiliation: ["Nolan Grayson", "Mark Grayson"],
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/3/3e/Art_Rosenbaum.png/revision/latest?cb=20210329124454"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/3/3e/Art_Rosenbaum.png/revision/latest?cb=20210329124454"
     },
     {
         name: "Monster Girl",
@@ -277,7 +277,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Hero",
         affiliation: ["Guardians of the Globe", "Teen Team"],
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/c/c8/Bulletproof.png/revision/latest?cb=20231207044115"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/c/c8/Bulletproof.png/revision/latest?cb=20231207044115"
     },
     {
         name: "Darkwing",
@@ -286,7 +286,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Hero",
         affiliation: "Guardians of the Globe",
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/6/63/Darkwing.png/revision/latest?cb=20231212015041"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/6/63/Darkwing.png/revision/latest?cb=20231212015041"
     },
     {
         name: "Dupli-Kate",
@@ -313,7 +313,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Hero",
         affiliation: "Guardians of the Globe",
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/6/6b/War_Woman_Invincible_14m30s965.png/revision/latest?cb=20210328001413"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/6/6b/War_Woman_Invincible_14m30s965.png/revision/latest?cb=20210328001413"
     },
     {
         name: "Aquarus",
@@ -322,7 +322,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Hero",
         affiliation: "Guardians of the Globe",
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/d/df/Aquarus_called_into_action.png/revision/latest?cb=20210403175427"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/d/df/Aquarus_called_into_action.png/revision/latest?cb=20210403175427"
     },
     {
         name: "Green Ghost",
@@ -331,7 +331,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Hero",
         affiliation: "Guardians of the Globe",
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/4/4e/GreenGhostE1ed.jpg/revision/latest?cb=20231122183608"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/4/4e/GreenGhostE1ed.jpg/revision/latest?cb=20231122183608"
     },
     {
         name: "Isotope",
@@ -340,7 +340,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Villain",
         affiliation: ["Machine Head", "Titan"],
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/4/4c/Isotope_ep_5_Invincible_%28289%29.png/revision/latest/smart/width/386/height/259?cb=20210409150007"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/4/4c/Isotope_ep_5_Invincible_%28289%29.png/revision/latest/smart/width/386/height/259?cb=20210409150007"
     },
     {
         name: "Machine Head",
@@ -349,7 +349,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Villain",
         affiliation: ["Isotope", "Titan"],
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/b/b9/Machine_Head_ep_5_Invincible_Amazon.png/revision/latest?cb=20210409154211"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/b/b9/Machine_Head_ep_5_Invincible_Amazon.png/revision/latest?cb=20210409154211"
     },
     {
         name: "King Lizard",
@@ -358,7 +358,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Villain",
         affiliation: "Lizard League",
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/0/05/King_Lizard.png/revision/latest?cb=20231210093827"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/0/05/King_Lizard.png/revision/latest?cb=20231210093827"
     },
     {
         name: "Mister Liu",
@@ -367,7 +367,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Villain",
         affiliation: "The Order",
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/b/b5/Mister_Liu_human_form_Invincible_%2848%29.png/revision/latest?cb=20210430075412"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/b/b5/Mister_Liu_human_form_Invincible_%2848%29.png/revision/latest?cb=20210430075412"
     },
     {
         name: "Mauler Twins",
@@ -376,7 +376,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Villain",
         affiliation: "None",
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/1/1f/The_Mauler_Twins_smile_Invincible_ep_6_%2872%29.png/revision/latest/scale-to-width-down/1200?cb=20210416085309"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/1/1f/The_Mauler_Twins_smile_Invincible_ep_6_%2872%29.png/revision/latest/scale-to-width-down/1200?cb=20210416085309"
     },
     {
         name: "Red Rush",
@@ -385,7 +385,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Hero",
         affiliation: "Guardians of the Globe",
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/d/d3/Red_Rush_Invincible_95_%2814%29.png/revision/latest?cb=20210328001123"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/d/d3/Red_Rush_Invincible_95_%2814%29.png/revision/latest?cb=20210328001123"
     },
     {
         name: "Martian Man",
@@ -394,7 +394,7 @@ const charactersDB = [
         homePlanet: "Mars",
         alignment: "Hero",
         affiliation: "Guardians of the Globe",
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/4/45/Martian_Man_Invincible_55s710_%282%29.png/revision/latest?cb=20210328000745"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/4/45/Martian_Man_Invincible_55s710_%282%29.png/revision/latest?cb=20210328000745"
     },
     {
         name: "Doc Seismic",
@@ -403,7 +403,7 @@ const charactersDB = [
         homePlanet: "Earth",
         alignment: "Villain",
         affiliation: "None",
-        image: "https://static.wikia.nocookie.net/amazon-invincible/images/0/04/Doc_Seismic_Invincible_s318_%284%29.png/revision/latest/scale-to-width-down/1200?cb=20210328000452"
+        image: "https://static0.wikia.nocookie.net/amazon-invincible/images/0/04/Doc_Seismic_Invincible_s318_%284%29.png/revision/latest/scale-to-width-down/1200?cb=20210328000452"
     }
 ];
 
