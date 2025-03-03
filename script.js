@@ -16,13 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Background images array - changes with wrong guesses
     const backgroundImages = [
-        'images/background/default.jpg', // Default
-        'images/background/wrong1.jpg', // Wrong guess 1
-        'images/background/wrong2.jpg', // Wrong guess 2
-        'images/background/wrong3.jpg', // Wrong guess 3
-        'images/background/wrong4.jpg', // Wrong guess 4
-        'images/background/wrong5.jpg', // Wrong guess 5
-        'images/background/wrong6.jpg'  // Wrong guess 6
+        './images/background/default.jpg', // Default
+        './images/background/wrong1.jpg', // Wrong guess 1
+        './images/background/wrong2.jpg', // Wrong guess 2
+        './images/background/wrong3.jpg', // Wrong guess 3
+        './images/background/wrong4.jpg', // Wrong guess 4
+        './images/background/wrong5.jpg', // Wrong guess 5
+        './images/background/wrong6.jpg'  // Wrong guess 6
     ];
     
     let wrongGuessCount = 0; // Track wrong guesses for background changes
@@ -56,86 +56,96 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Game Functions
     async function initGame() {
-        // Try to load previous day's character first
-        previousDayCharacter = await loadPreviousDayCharacter();
-        if (previousDayCharacter) {
-            console.log("Loaded previous character:", previousDayCharacter.name);
-        }
+        console.log("Initializing game");
         
-        // Set the daily character based on the date
-        setDailyCharacter();
-        console.log("Initial daily character set:", dailyCharacter.name);
-        
-        // Ensure the daily character is different from the previous character
-        if (previousDayCharacter && dailyCharacter.name === previousDayCharacter.name && charactersDB.length > 1) {
-            console.log("Daily character matches previous character on init - selecting a different one");
-            // Use next character in array
-            const currentIndex = charactersDB.findIndex(char => char.name === dailyCharacter.name);
-            const newIndex = (currentIndex + 1) % charactersDB.length;
-            dailyCharacter = charactersDB[newIndex];
-            console.log("New daily character selected:", dailyCharacter.name);
-        }
-        
-        // Now show the previous day character if available
-        if (previousDayCharacter) {
-            previousCharacterSpan.textContent = previousDayCharacter.name;
-            previousCharacterContainer.classList.remove('hidden');
-        }
-        
-        // Reset background image to default
-        setBackgroundImage(0);
-        
-        // Check if using server
-        const useServer = gameServer.isConfigured();
-        
-        // Load stats and game state
         try {
-            // Load player stats
-            stats = await gameServer.loadStats();
-            
-            // Check if the player has played today
-            const today = getTodayDateString();
-            const todayGame = await gameServer.loadGame(today);
-            
-            if (todayGame && todayGame.guesses && todayGame.guesses.length > 0) {
-                guesses = todayGame.guesses;
-                guessCount = guesses.length;
+            // Try to load previous day's character first
+            previousDayCharacter = await loadPreviousDayCharacter();
+            if (previousDayCharacter) {
+                console.log("Loaded previous character:", previousDayCharacter.name);
                 
-                // Show the guesses section since there are existing guesses
-                attemptsSection.classList.remove('hidden');
+                // Display the previous day character
+                previousCharacterSpan.textContent = previousDayCharacter.name;
+                previousCharacterContainer.classList.remove('hidden');
+                console.log("Previous character display initialized");
+            } else {
+                console.log("No previous day character available");
+                previousCharacterContainer.classList.add('hidden');
+            }
+            
+            // Set the daily character based on the date
+            setDailyCharacter();
+            console.log("Initial daily character set:", dailyCharacter.name);
+            
+            // Ensure the daily character is different from the previous character
+            if (previousDayCharacter && dailyCharacter.name === previousDayCharacter.name && charactersDB.length > 1) {
+                console.log("Daily character matches previous character on init - selecting a different one");
+                // Use next character in array
+                const currentIndex = charactersDB.findIndex(char => char.name === dailyCharacter.name);
+                const newIndex = (currentIndex + 1) % charactersDB.length;
+                dailyCharacter = charactersDB[newIndex];
+                console.log("New daily character selected:", dailyCharacter.name);
+            }
+            
+            // Reset background image to default
+            setBackgroundImage(0);
+            
+            // Check if using server
+            const useServer = gameServer.isConfigured();
+            
+            // Load stats and game state
+            try {
+                // Load player stats
+                stats = await gameServer.loadStats();
                 
-                // Count wrong guesses to set correct background
-                wrongGuessCount = 0;
-                for (const guess of guesses) {
-                    if (guess.name.toLowerCase() !== dailyCharacter.name.toLowerCase()) {
-                        wrongGuessCount++;
+                // Check if the player has played today
+                const today = getTodayDateString();
+                const todayGame = await gameServer.loadGame(today);
+                
+                if (todayGame && todayGame.guesses && todayGame.guesses.length > 0) {
+                    // Restore today's game
+                    console.log("Restoring today's game with", todayGame.guesses.length, "guesses");
+                    guesses = todayGame.guesses;
+                    guessCount = guesses.length;
+                    
+                    // Add all previous guesses to the UI
+                    attemptsSection.classList.remove('hidden');
+                    guessesList.innerHTML = '';
+                    guesses.forEach(addGuessToUI);
+                    
+                    // Check if the last guess was correct
+                    const lastGuess = guesses[guesses.length - 1];
+                    if (lastGuess.name.toLowerCase() === dailyCharacter.name.toLowerCase()) {
+                        gameOver = true;
+                        await handleWin();
+                    } else if (guessCount >= 6) {
+                        gameOver = true;
+                        await handleLoss();
                     }
                 }
                 
-                // Set background based on wrong guesses
-                setBackgroundImage(Math.min(wrongGuessCount, backgroundImages.length - 1));
+                // Update stats display
+                updateStatsDisplay();
                 
-                // Rebuild the guesses UI
-                guesses.forEach(guess => {
-                    addGuessToUI(guess);
-                });
+                // Start countdown
+                startCountdown();
                 
-                // Check if the game was won
-                const lastGuess = guesses[guesses.length - 1];
-                if (lastGuess.name.toLowerCase() === dailyCharacter.name.toLowerCase()) {
-                    gameOver = true;
-                    showWinMessage();
-                }
+                // Set up autocomplete
+                setupCustomDropdown();
+                
+            } catch (error) {
+                console.error("Error loading game state:", error);
+                // Continue without saved state
+                startCountdown();
+                setupCustomDropdown();
             }
         } catch (error) {
-            console.error("Error initializing game:", error);
+            console.error("Error during game initialization:", error);
+            // Try to continue with minimal functionality
+            setDailyCharacter();
+            startCountdown();
+            setupCustomDropdown();
         }
-        
-        // Update the statistics display
-        updateStatsDisplay();
-        
-        // Start the countdown to the next character
-        startCountdown();
     }
     
     // Store previous day character when character changes
@@ -146,8 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
-            // Use localStorage to store the previous character
-            localStorage.setItem('previousDayCharacter', JSON.stringify(character));
+            // Use more specific localStorage key to avoid conflicts
+            localStorage.setItem('invincibdle_previousDayCharacter', JSON.stringify(character));
             console.log("Successfully saved previous day character:", character.name);
         } catch (error) {
             console.error("Error saving previous day character:", error);
@@ -157,17 +167,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load previous day character
     async function loadPreviousDayCharacter() {
         try {
-            const storedCharacter = localStorage.getItem('previousDayCharacter');
+            // Check both the new and old key formats for backwards compatibility
+            let storedCharacter = localStorage.getItem('invincibdle_previousDayCharacter');
+            
+            // If not found with new key, try the old key
+            if (!storedCharacter) {
+                storedCharacter = localStorage.getItem('previousDayCharacter');
+                
+                // If found with old key, migrate to new key format
+                if (storedCharacter) {
+                    localStorage.setItem('invincibdle_previousDayCharacter', storedCharacter);
+                    console.log("Migrated previous day character from old storage format");
+                }
+            }
+            
             if (storedCharacter) {
-                const parsed = JSON.parse(storedCharacter);
-                console.log("Successfully loaded previous day character:", parsed.name);
-                return parsed;
+                try {
+                    const parsed = JSON.parse(storedCharacter);
+                    console.log("Successfully loaded previous day character:", parsed.name);
+                    return parsed;
+                } catch (parseError) {
+                    console.error("Error parsing stored character:", parseError);
+                    // Clear corrupted data
+                    localStorage.removeItem('invincibdle_previousDayCharacter');
+                    localStorage.removeItem('previousDayCharacter');
+                    return null;
+                }
             }
             console.log("No previous day character found in storage");
             return null;
         } catch (error) {
             console.error("Error loading previous day character:", error);
             // Clear potentially corrupted data
+            localStorage.removeItem('invincibdle_previousDayCharacter');
             localStorage.removeItem('previousDayCharacter');
             return null;
         }
@@ -213,6 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function setBackgroundImage(index) {
         if (index >= 0 && index < backgroundImages.length) {
             document.body.style.backgroundImage = `url('${backgroundImages[index]}')`;
+            console.log(`Changed background image to: ${backgroundImages[index]}`);
         }
     }
     
@@ -573,11 +606,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (dailyCharacter) {
                     console.log("Saving current character as previous:", dailyCharacter.name);
                     previousDayCharacter = {...dailyCharacter};
-                    savePreviousDayCharacter(previousDayCharacter);
-                    
-                    // Update previous character display
-                    previousCharacterSpan.textContent = previousDayCharacter.name;
-                    previousCharacterContainer.classList.remove('hidden');
+                    savePreviousDayCharacter(previousDayCharacter)
+                        .then(() => {
+                            // Update previous character display after save completes
+                            if (previousDayCharacter) {
+                                previousCharacterSpan.textContent = previousDayCharacter.name;
+                                previousCharacterContainer.classList.remove('hidden');
+                                console.log("Previous character display updated");
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Error handling previous character update:", err);
+                        });
                 } else {
                     console.warn("No daily character to save as previous");
                 }
