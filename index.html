@@ -6,10 +6,6 @@
     <title>Invincibdle - Daily Invincible Character Guessing Game</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
-    
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020606191836676"
-     crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
@@ -17,19 +13,6 @@
             <h1 class="title">INVINCIBDLE</h1>
             <p class="subtitle">Guess the daily Invincible character!</p>
         </header>
-
-        <!-- Ad Container: Top Banner -->
-        <div class="ad-container ad-banner">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-YOURPUBLISHERID"
-                 data-ad-slot="YOURADSLOT1"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
 
         <div class="game-container">
             <div class="input-container">
@@ -69,6 +52,7 @@
         </div>
 
         <div class="game-status">
+            
             <div class="countdown-container">
                 <h3>Next character in: <span id="next-character-time"></span></h3>
             </div>
@@ -76,19 +60,6 @@
             <div id="previous-character-container" class="previous-character-container hidden">
                 <h3>Yesterday's character: <span id="previous-character">Unknown</span></h3>
             </div>
-        </div>
-
-        <!-- Ad Container: Middle Banner -->
-        <div class="ad-container ad-rectangle">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-YOURPUBLISHERID"
-                 data-ad-slot="YOURADSLOT2"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
         </div>
 
         <div class="game-info">
@@ -112,38 +83,12 @@
                 <div id="modal-stats"></div>
                 <p id="next-character-countdown">Next character in <span id="time-remaining"></span></p>
                 <button id="share-button">SHARE RESULTS</button>
-                
-                <!-- Ad Container: Win Modal -->
-                <div class="ad-container ad-rectangle-small">
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-YOURPUBLISHERID"
-                         data-ad-slot="YOURADSLOT3"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                    <script>
-                         (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                </div>
             </div>
         </div>
     </div>
 
     <footer>
         <p>Based on the Invincible series created by Robert Kirkman</p>
-        
-        <!-- Ad Container: Bottom Banner -->
-        <div class="ad-container ad-banner footer-ad">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-YOURPUBLISHERID"
-                 data-ad-slot="YOURADSLOT4"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
     </footer>
 
     <script src="characters.js"></script>
