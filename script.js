@@ -59,6 +59,14 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Initializing game");
         
         try {
+            // Check if we're loading after a day change
+            const dayChanged = localStorage.getItem('invincibdle_dayChanged') === 'true';
+            if (dayChanged) {
+                // Clear the flag
+                localStorage.removeItem('invincibdle_dayChanged');
+                console.log("Day change detected - using fresh game state");
+            }
+            
             // Try to load previous day's character first
             previousDayCharacter = await loadPreviousDayCharacter();
             if (previousDayCharacter) {
@@ -117,10 +125,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     const lastGuess = guesses[guesses.length - 1];
                     if (lastGuess.name.toLowerCase() === dailyCharacter.name.toLowerCase()) {
                         gameOver = true;
-                        await handleWin();
+                        // Don't update stats again, just show win message
+                        showWinMessage();
+                        updateStatsDisplay();
                     } else if (guessCount >= 6) {
                         gameOver = true;
-                        await handleLoss();
+                        // Don't update stats again, just show loss message
+                        resultMessage.textContent = `Game over! The character was ${dailyCharacter.name}.`;
+                        resultMessage.className = 'error-message';
+                        document.getElementById('statistics').classList.remove('hidden');
+                        updateStatsDisplay();
                     }
                 }
                 
@@ -156,13 +170,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
-            const previousDayData = {
-                character: character,
-                savedDate: getTodayDateString()
-            };
-            
             // Use more specific localStorage key to avoid conflicts
-            localStorage.setItem('invincibdle_previousDayCharacter', JSON.stringify(previousDayData));
+            // Add current domain to the key to handle different domains
+            const domain = window.location.hostname;
+            const storageKey = `invincibdle_previousDayCharacter_${domain}`;
+            
+            localStorage.setItem(storageKey, JSON.stringify(character));
+            // Also save to the common key for backward compatibility
+            localStorage.setItem('invincibdle_previousDayCharacter', JSON.stringify(character));
             console.log("Successfully saved previous day character:", character.name);
         } catch (error) {
             console.error("Error saving previous day character:", error);
@@ -172,32 +187,56 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load previous day character
     async function loadPreviousDayCharacter() {
         try {
-            const savedData = localStorage.getItem('invincibdle_previousDayCharacter');
-            if (!savedData) {
-                return null;
-            }
-
-            const data = JSON.parse(savedData);
-            const today = getTodayDateString();
+            // Check domain-specific key first
+            const domain = window.location.hostname;
+            const domainSpecificKey = `invincibdle_previousDayCharacter_${domain}`;
+            let storedCharacter = localStorage.getItem(domainSpecificKey);
             
-            // Get yesterday's date
-            const yesterday = new Date();
-            yesterday.setUTCDate(yesterday.getUTCDate() - 1);
-            const yesterdayString = `${yesterday.getUTCFullYear()}-${yesterday.getUTCMonth() + 1}-${yesterday.getUTCDate()}`;
-            
-            // Only show the previous character if it was from yesterday
-            if (data.savedDate === yesterdayString) {
-                return data.character;
+            // If not found with domain-specific key, try the general key
+            if (!storedCharacter) {
+                storedCharacter = localStorage.getItem('invincibdle_previousDayCharacter');
+                
+                // If found with general key, migrate to domain-specific key
+                if (storedCharacter) {
+                    localStorage.setItem(domainSpecificKey, storedCharacter);
+                    console.log("Migrated previous day character to domain-specific storage format");
+                }
             }
             
-            // If the saved character is not from yesterday, clear it
-            if (data.savedDate !== today) {
-                localStorage.removeItem('invincibdle_previousDayCharacter');
+            // If still not found, try old key
+            if (!storedCharacter) {
+                storedCharacter = localStorage.getItem('previousDayCharacter');
+                
+                // If found with old key, migrate to new key formats
+                if (storedCharacter) {
+                    localStorage.setItem('invincibdle_previousDayCharacter', storedCharacter);
+                    localStorage.setItem(domainSpecificKey, storedCharacter);
+                    console.log("Migrated previous day character from old storage format");
+                }
             }
             
+            if (storedCharacter) {
+                try {
+                    const parsed = JSON.parse(storedCharacter);
+                    console.log("Successfully loaded previous day character:", parsed.name);
+                    return parsed;
+                } catch (parseError) {
+                    console.error("Error parsing stored character:", parseError);
+                    // Clear corrupted data
+                    localStorage.removeItem(domainSpecificKey);
+                    localStorage.removeItem('invincibdle_previousDayCharacter');
+                    localStorage.removeItem('previousDayCharacter');
+                    return null;
+                }
+            }
+            console.log("No previous day character found in storage");
             return null;
         } catch (error) {
             console.error("Error loading previous day character:", error);
+            // Clear potentially corrupted data
+            localStorage.removeItem(`invincibdle_previousDayCharacter_${window.location.hostname}`);
+            localStorage.removeItem('invincibdle_previousDayCharacter');
+            localStorage.removeItem('previousDayCharacter');
             return null;
         }
     }
@@ -452,21 +491,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     async function handleWin() {
-        // Check if we've already recorded this win to prevent duplicate stats
-        const today = getTodayDateString();
-        const todayGame = await gameServer.loadGame(today);
+        // Update stats
+        stats.played++;
+        stats.won++;
+        stats.currentStreak++;
+        stats.maxStreak = Math.max(stats.maxStreak, stats.currentStreak);
         
-        // Only update stats if this is a new win
-        if (!todayGame || !todayGame.won) {
-            // Update stats
-            stats.played++;
-            stats.won++;
-            stats.currentStreak++;
-            stats.maxStreak = Math.max(stats.maxStreak, stats.currentStreak);
-            
-            // Save stats
-            await gameServer.saveStats(stats);
-        }
+        // Save stats
+        await gameServer.saveStats(stats);
         
         // Show win message and update stats display
         showWinMessage();
@@ -577,49 +609,78 @@ document.addEventListener('DOMContentLoaded', () => {
         // Calculate time until next day (midnight UTC)
         function updateCountdown() {
             const now = new Date();
-            const tomorrow = new Date();
-            tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
-            tomorrow.setUTCHours(0, 0, 0, 0);
+            const tomorrow = new Date(Date.UTC(
+                now.getUTCFullYear(),
+                now.getUTCMonth(),
+                now.getUTCDate() + 1,
+                0, 0, 0, 0
+            ));
             
-            const timeRemaining = tomorrow - now;
-            const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
-            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+            // Calculate milliseconds until tomorrow
+            const msUntilTomorrow = tomorrow - now;
             
-            // Update the countdown display
-            const nextCharacterTimeSpan = document.getElementById('next-character-time');
-            const timeRemainingSpan = document.getElementById('time-remaining');
+            // Convert to hours, minutes, seconds
+            const hours = Math.floor(msUntilTomorrow / (1000 * 60 * 60));
+            const minutes = Math.floor((msUntilTomorrow % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((msUntilTomorrow % (1000 * 60)) / 1000);
+            
+            // Format the time string
             const timeString = `${hours}h ${minutes}m ${seconds}s`;
             
-            if (nextCharacterTimeSpan) nextCharacterTimeSpan.textContent = timeString;
-            if (timeRemainingSpan) timeRemainingSpan.textContent = timeString;
+            // Update both countdown displays
+            timeRemainingSpan.textContent = timeString;
+            nextCharacterTimeSpan.textContent = timeString;
             
-            // Check if we need to change the character
-            if (timeRemaining <= 0) {
-                // Save the current character as previous day's character before changing
+            // If it's a new day, refresh the character
+            if (msUntilTomorrow <= 0) {
+                console.log("New day reached - updating characters");
+                
+                // Store the current character name for comparison after update
+                const currentCharacterName = dailyCharacter ? dailyCharacter.name : null;
+                
+                // Store the current character as previous
                 if (dailyCharacter) {
-                    savePreviousDayCharacter(dailyCharacter);
+                    console.log("Saving current character as previous:", dailyCharacter.name);
+                    previousDayCharacter = {...dailyCharacter};
+                    savePreviousDayCharacter(previousDayCharacter)
+                        .then(() => {
+                            // Update previous character display after save completes
+                            if (previousDayCharacter) {
+                                previousCharacterSpan.textContent = previousDayCharacter.name;
+                                previousCharacterContainer.classList.remove('hidden');
+                                console.log("Previous character display updated");
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Error handling previous character update:", err);
+                        });
+                } else {
+                    console.warn("No daily character to save as previous");
                 }
                 
-                // Reset the game state
-                gameOver = false;
+                // Reset game state for the new day
                 guesses = [];
                 guessCount = 0;
-                wrongGuessCount = 0;
-                
-                // Set new daily character
-                setDailyCharacter();
-                
-                // Reset UI
+                gameOver = false;
                 guessesList.innerHTML = '';
                 resultMessage.textContent = '';
                 resultMessage.className = '';
-                attemptsSection.classList.add('hidden');
-                setBackgroundImage(0);
                 
-                // If not in the middle of a game, reload to start fresh
+                // Set the new character
+                setDailyCharacter();
+                console.log("New daily character set:", dailyCharacter.name);
+                
+                // Verify we don't have the same character twice
+                if (currentCharacterName && dailyCharacter.name === currentCharacterName) {
+                    console.warn("WARNING: Same character selected twice in a row despite prevention logic");
+                }
+                
+                // Only reload the page if there's no active game
+                // This prevents unnecessary refreshes that might trigger duplicate stats increments
                 if (!gameOver && guesses.length === 0) {
-                    console.log("No active game - reloading page");
+                    console.log("No active game - reloading page to refresh UI");
+                    // Add a flag to localStorage to prevent stats being double-counted
+                    localStorage.setItem('invincibdle_dayChanged', 'true');
                     location.reload();
                 }
             }
